@@ -1,6 +1,6 @@
 Discord.gd
 =========================================
-###### (Get it from Godot Asset Library - https://godotengine.org/asset-library/asset/1010)
+<h2>Originally forked from https://github.com/3ddelano/discord.gd for Godot 4.x</h2>
 
 
 ### A Godot plugin to interact with the Discord Bot API. Make Discord Bots in Godot!
@@ -8,7 +8,7 @@ Discord.gd
 > 100% GDScript
 
 <br>
-<img alt="Godot3" src="https://img.shields.io/badge/-Godot 3.x-478CBF?style=for-the-badge&logo=godotengine&logoWidth=20&logoColor=white" />
+<img alt="Godot4" src="https://img.shields.io/badge/-Godot 4.x-478CBF?style=for-the-badge&logo=godotengine&logoWidth=20&logoColor=white" />
 
 Features
 --------------
