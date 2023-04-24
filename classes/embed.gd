@@ -32,57 +32,57 @@
 #
 #
 #func get_title():
-#	return title if Helpers.is_valid_str(title) else null
+#	return title if DiscordHelpers.is_valid_str(title) else null
 #
 #
 #func get_type():
-#	return type if Helpers.is_valid_str(type) else null
+#	return type if DiscordHelpers.is_valid_str(type) else null
 #
 #
 #func get_description():
-#	return description if Helpers.is_valid_str(description) else null
+#	return description if DiscordHelpers.is_valid_str(description) else null
 #
 #
 #func get_url():
-#	return url if Helpers.is_valid_str(url) else null
+#	return url if DiscordHelpers.is_valid_str(url) else null
 #
 #
 #func get_timestamp():
-#	return timestamp if Helpers.is_valid_str(timestamp) else null
+#	return timestamp if DiscordHelpers.is_valid_str(timestamp) else null
 #
 #
 #func get_color():
-#	return color if Helpers.is_valid_str(color) else null
+#	return color if DiscordHelpers.is_valid_str(color) else null
 #
 #
 #func set_title(_title):
-#	assert(Helpers.is_valid_str(_title), 'Invalid Type: title of Embed must be a String')
+#	assert(DiscordHelpers.is_valid_str(_title), 'Invalid Type: title of Embed must be a String')
 #	assert(_title.length() <= 256, 'title of Embed must be <= 256 characters')
 #	title = _title
 #	return self
 #
 #
 #func set_type(_type):
-#	assert(Helpers.is_valid_str(_type), 'Invalid Type: type of Embed must be a String')
+#	assert(DiscordHelpers.is_valid_str(_type), 'Invalid Type: type of Embed must be a String')
 #	type = _type
 #	return self
 #
 #
 #func set_description(_description):
-#	assert(Helpers.is_valid_str(_description), 'Invalid Type: description of Embed must be a String')
+#	assert(DiscordHelpers.is_valid_str(_description), 'Invalid Type: description of Embed must be a String')
 #	assert(_description.length() <= 4096, 'Embed description must be <= 4096 characters')
 #	description = _description
 #	return self
 #
 #
 #func set_url(_url):
-#	assert(Helpers.is_valid_str(_url), 'Invalid Type: url of Embed must be a String')
+#	assert(DiscordHelpers.is_valid_str(_url), 'Invalid Type: url of Embed must be a String')
 #	url = _url
 #	return self
 #
 #
 #func set_timestamp(_timestamp = ''):
-#	timestamp = Helpers.make_iso_string()
+#	timestamp = DiscordHelpers.make_iso_string()
 #	return self
 #
 #
@@ -103,7 +103,7 @@
 #
 #
 #func set_footer(text: String, icon_url: String = '', proxy_icon_url: String = ''):
-#	assert(Helpers.is_valid_str(text), 'Invalid Type: footer text of Embed must be a valid String')
+#	assert(DiscordHelpers.is_valid_str(text), 'Invalid Type: footer text of Embed must be a valid String')
 #	assert(text.length() <= 2048, 'Embed footer text must be <= 2048 characters')
 #
 #	footer = {'text': text, 'icon_url': icon_url, 'proxy_icon_url': proxy_icon_url}
@@ -111,62 +111,62 @@
 #
 #
 #func set_image(url: String, width: int = -1, height: int = -1, proxy_url: String = ''):
-#	assert(Helpers.is_valid_str(url), 'Invalid Type: image url of Embed must be a valid String')
+#	assert(DiscordHelpers.is_valid_str(url), 'Invalid Type: image url of Embed must be a valid String')
 #	image = {
 #		'url': url,
 #		'width': width if width != -1 else null,
 #		'height': height if height != -1 else null,
-#		'proxy_url': proxy_url if Helpers.is_valid_str(proxy_url) else null
+#		'proxy_url': proxy_url if DiscordHelpers.is_valid_str(proxy_url) else null
 #	}
 #	return self
 #
 #
 #func set_thumbnail(url: String, width: int = -1, height: int = -1, proxy_url: String = ''):
-#	assert(Helpers.is_valid_str(url), 'Embed thumbnail url must be a valid String')
+#	assert(DiscordHelpers.is_valid_str(url), 'Embed thumbnail url must be a valid String')
 #	thumbnail = {
 #		'url': url,
 #		'width': width if width != -1 else null,
 #		'height': height if height != -1 else null,
-#		'proxy_url': proxy_url if Helpers.is_valid_str(proxy_url) else null
+#		'proxy_url': proxy_url if DiscordHelpers.is_valid_str(proxy_url) else null
 #	}
 #	return self
 #
 #
 #func set_video(url: String, width: int = -1, height: int = -1, proxy_url: String = ''):
-#	assert(Helpers.is_valid_str(url), 'Invalid Type: video url of Embed must be a valid String')
+#	assert(DiscordHelpers.is_valid_str(url), 'Invalid Type: video url of Embed must be a valid String')
 #	video = {
 #		'url': url,
 #		'width': width if width != -1 else null,
 #		'height': height if height != -1 else null,
-#		'proxy_url': proxy_url if Helpers.is_valid_str(proxy_url) else null
+#		'proxy_url': proxy_url if DiscordHelpers.is_valid_str(proxy_url) else null
 #	}
 #	return self
 #
 #
 #func set_provider(name: String, url: String = ''):
-#	assert(Helpers.is_valid_str(name), 'Invalid Type: provider name of Embed must be a valid String')
-#	provider = {'name': name, 'url': url if Helpers.is_valid_str(url) else null}
+#	assert(DiscordHelpers.is_valid_str(name), 'Invalid Type: provider name of Embed must be a valid String')
+#	provider = {'name': name, 'url': url if DiscordHelpers.is_valid_str(url) else null}
 #	return self
 #
 #
 #func set_author(
 #	name: String, url: String = '', icon_url: String = '', proxy_icon_url: String = ''
 #):
-#	assert(Helpers.is_valid_str(name), 'Invalid Type: author name of Embed must be a valid String')
+#	assert(DiscordHelpers.is_valid_str(name), 'Invalid Type: author name of Embed must be a valid String')
 #	assert(name.length() <= 256, 'Embed author name must be <= 256 characters')
 #
 #	author = {
 #		'name': name,
-#		'url': url if Helpers.is_valid_str(url) else null,
-#		'icon_url': icon_url if Helpers.is_valid_str(icon_url) else null,
-#		'proxy_icon_url': proxy_icon_url if Helpers.is_valid_str(proxy_icon_url) else null
+#		'url': url if DiscordHelpers.is_valid_str(url) else null,
+#		'icon_url': icon_url if DiscordHelpers.is_valid_str(icon_url) else null,
+#		'proxy_icon_url': proxy_icon_url if DiscordHelpers.is_valid_str(proxy_icon_url) else null
 #	}
 #	return self
 #
 #
 #func add_field(name: String, value: String, inline: bool = false, index = -1):
-#	assert(Helpers.is_valid_str(name), 'Invalid Type: field name of Embed must be a valid String')
-#	assert(Helpers.is_valid_str(value), 'Invalid Type: field value of Embed must be a valid String')
+#	assert(DiscordHelpers.is_valid_str(name), 'Invalid Type: field name of Embed must be a valid String')
+#	assert(DiscordHelpers.is_valid_str(value), 'Invalid Type: field value of Embed must be a valid String')
 #
 #	assert(name.length() <= 256, 'Embed field name must be <= 256 characters')
 #	assert(value.length() <= 1024, 'Embed field value must be <= 1024 characters')
@@ -182,7 +182,7 @@
 #
 #func slice_fields(index: int, delete_count: int = 1, replace_fields: Array = []):
 #	var n = fields.size()
-#	assert(Helpers.is_num(index), 'Missing index must be provided to Embed.slice_fields')
+#	assert(DiscordHelpers.is_num(index), 'Missing index must be provided to Embed.slice_fields')
 #	assert(index > -1 and index < n, 'index out of bounds in Embed.slice_fields')
 #
 #	var max_deletable = n - index

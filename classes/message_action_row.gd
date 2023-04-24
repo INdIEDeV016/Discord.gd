@@ -14,7 +14,7 @@ func add_component(component, index = -1):
 
 	var same_custom_id = false
 	for _component in components:
-		if Helpers.is_valid_str(_component.get_custom_id()):
+		if DiscordHelpers.is_valid_str(_component.get_custom_id()):
 			if _component.get_custom_id() == component.get_custom_id():
 				same_custom_id = true
 				break
@@ -29,7 +29,7 @@ func add_component(component, index = -1):
 
 func slice_components(index: int, delete_count: int = 1, replace_components: Array = []):
 	var n = components.size()
-	assert(Helpers.is_num(index), 'index must be provided to MessageActionRow.slice_components')
+	assert(DiscordHelpers.is_num(index), 'index must be provided to MessageActionRow.slice_components')
 	assert(index > -1 and index < n, 'index out of bounds in MessageActionRow.slice_components')
 
 	var max_deletable = n - index

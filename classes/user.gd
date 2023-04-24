@@ -123,15 +123,15 @@ func _init(user):
 #		email = user.email
 #
 #	if user.has('flags') and user.flags != null:
-#		assert(Helpers.is_num(user.flags), 'flags attribute of User must be int')
+#		assert(DiscordHelpers.is_num(user.flags), 'flags attribute of User must be int')
 #		flags = user.flags
 #
 #	if user.has('premium_type') and user.premium_type != null:
-#		assert(Helpers.is_num(user.premium), 'premium_type attribute of User must be int')
+#		assert(DiscordHelpers.is_num(user.premium), 'premium_type attribute of User must be int')
 #		premium_type = user.premium_type
 #
 #	if user.has('public_flags') and user.public_flags != null:
-#		assert(Helpers.is_num(user.public_flags), 'public_flags attribute of User must be int')
+#		assert(DiscordHelpers.is_num(user.public_flags), 'public_flags attribute of User must be int')
 #		public_flags = user.public_flags
 
 
@@ -185,7 +185,7 @@ func _get_display_avatar_url(options: Dictionary = {}, _id: Snowflake = id, _ava
 
 	if options.has('dynamic'):
 		assert(typeof(options.dynamic) == TYPE_BOOL, 'dynamic attribute must be of type bool in get_display_avatar')
-		if Helpers.is_valid_str(_avatar) and _avatar.begins_with('a_'):
+		if DiscordHelpers.is_valid_str(_avatar) and _avatar.begins_with('a_'):
 			options.format = 'gif'
 	else:
 		options.dynamic = false
@@ -217,10 +217,10 @@ func get_display_avatar(options: Dictionary = {size = 32}) -> ImageTexture:
 		if _avatar.is_empty():
 			_avatar = discriminator
 
-		return Helpers.to_image_texture(Image.load_from_file(DiscordBot.cache_path.image + "%s_%s.%s" % [_avatar, options.size, options.format]))
+		return DiscordHelpers.to_image_texture(Image.load_from_file(DiscordBot.cache_path.image + "%s_%s.%s" % [_avatar, options.size, options.format]))
 
 #	print_debug(user_id, " ", avatar, " ", get_display_avatar_url(options, user_id, _avatar))
-	var image: Image = Helpers.new().call(StringName("to_%s_image" % options.format), await DiscordBot._send_get_cdn(_get_display_avatar_url(options, id, avatar)))
+	var image: Image = DiscordHelpers.new().call(StringName("to_%s_image" % options.format), await DiscordBot._send_get_cdn(_get_display_avatar_url(options, id, avatar)))
 
 	if _avatar.is_empty():
 		_avatar = discriminator
@@ -232,7 +232,7 @@ func get_display_avatar(options: Dictionary = {size = 32}) -> ImageTexture:
 		image_err = image.call(StringName("save_%s" % options.format), DiscordBot.cache_path.image + "%s.%s" % [_avatar, options.format])
 
 	if image_err != OK: push_error("An error occured while storing the image cache: ERR_%s" % error_string(image_err).to_upper())
-	return Helpers.to_image_texture(image)
+	return DiscordHelpers.to_image_texture(image)
 
 
 func get_default_avatar() -> PackedByteArray:

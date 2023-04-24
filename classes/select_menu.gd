@@ -28,9 +28,9 @@ func get_custom_id() -> String:
 
 func add_option(value: String, label: String, data: Dictionary = {}):
 	assert(options.size() <= 25, 'options of SelectMenu cannot have more than 25 options')
-	assert(Helpers.is_valid_str(value), 'value of SelectMenu option  must be a valid String')
+	assert(DiscordHelpers.is_valid_str(value), 'value of SelectMenu option  must be a valid String')
 	assert(value.length() <= 100, 'value of SelectMenu option cannot be more than 100 characters')
-	assert(Helpers.is_valid_str(label), 'SelectMenu option must have a label')
+	assert(DiscordHelpers.is_valid_str(label), 'SelectMenu option must have a label')
 	assert(label.length() <= 100, 'label of SelectMenu option cannot be more than 100 characters')
 
 	# Parse data
@@ -109,7 +109,7 @@ func print():
 
 func _to_dict() -> Dictionary:
 	# Default style is primary
-	assert(Helpers.is_valid_str(custom_id), 'A button must have a custom_id.')
+	assert(DiscordHelpers.is_valid_str(custom_id), 'A button must have a custom_id.')
 	return {
 		'type': type,
 		'custom_id': custom_id,

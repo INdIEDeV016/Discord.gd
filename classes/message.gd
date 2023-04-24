@@ -8,7 +8,7 @@
 #	id = message.id
 #	assert(message.has('type'), 'Message must have a type')
 #
-#	assert(message.has('channel_id') and message.channel_id and Helpers.is_valid_str(message.channel_id), 'Message must have a valid channel_id')
+#	assert(message.has('channel_id') and message.channel_id and DiscordHelpers.is_valid_str(message.channel_id), 'Message must have a valid channel_id')
 #	channel_id = message.channel_id
 #
 #	if MESSAGE_TYPES.get(str(message.type)):
@@ -18,7 +18,7 @@
 #
 #	assert(message.has('author'), 'Message must have an author')
 #	# Check if the message is sent by webhook
-#	if message.has('webhook_id') and Helpers.is_str(message.webhook_id) and message.webhook_id.length() > 0:
+#	if message.has('webhook_id') and DiscordHelpers.is_str(message.webhook_id) and message.webhook_id.length() > 0:
 #		# webhook sent a message
 #		pass
 #	else:
@@ -30,7 +30,7 @@
 #		flags = MessageFlags.new(message.flags)
 #
 ##	if message.channel.type != 'DM':
-##		assert(message.has('guild_id') and message.guild_id and Helpers.is_valid_str(message.guild_id), 'Message must have a valid guild_id')
+##		assert(message.has('guild_id') and message.guild_id and DiscordHelpers.is_valid_str(message.guild_id), 'Message must have a valid guild_id')
 ##		guild_id = message.guild_id
 #
 #	if message.has('guild_id') and message.guild_id:
@@ -114,7 +114,7 @@
 #
 #func slice_attachments(index: int, delete_count: int = 1, replace_attachments: Array = []):
 #	var n = attachments.size()
-#	assert(Helpers.is_num(index), 'index must be provided to Message.slice_attachments')
+#	assert(DiscordHelpers.is_num(index), 'index must be provided to Message.slice_attachments')
 #	assert(index > -1 and index < n, 'index out of bounds in Message.slice_attachments')
 #
 #	var max_deletable = n - index
@@ -126,7 +126,7 @@
 #
 #	if replace_attachments.size() > 0:
 #		for attachment in replace_attachments:
-#			assert(attachment.has('id') and Helpers.is_valid_str(attachment.id), 'Missing id for attachment in replace_attachments in slice_attachments')
+#			assert(attachment.has('id') and DiscordHelpers.is_valid_str(attachment.id), 'Missing id for attachment in replace_attachments in slice_attachments')
 #		attachments.append_array(replace_attachments)
 #
 #	return self

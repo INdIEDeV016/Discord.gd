@@ -90,7 +90,7 @@ func reply(options: Dictionary):
 
 	options.type = RESPONSE_TYPES['CHANNEL_MESSAGE_WITH_SOURCE']
 	var res = await DiscordBot._send_request('/interactions/%s/%s/callback' % [id, token], options)
-#	print_debug('/interactions/%s/%s/callback' % [id, token], " ", Helpers.get_string_from_dict_or_array(options))
+#	print_debug('/interactions/%s/%s/callback' % [id, token], " ", DiscordHelpers.get_string_from_dict_or_array(options))
 	replied = true
 
 	return res
@@ -178,7 +178,7 @@ func _delete_message(message_id: String = '@original'):
 func _edit_message(message_id: String, options: Dictionary):
 	options.type = RESPONSE_TYPES['CHANNEL_MESSAGE_WITH_SOURCE']
 	var msg = await DiscordBot._send_request('/webhooks/{application.id}/{interaction.token}/messages/{message.id}'.format({"application.id" = application_id, "interaction.token" = token, "message.id" = message_id}), options, HTTPClient.METHOD_PATCH)
-#	print_debug('/webhooks/{application.id}/{interaction.token}/messages/{message.id}'.format({"application.id" = application_id, "interaction.token" = token, "message.id" = message_id}), " | ", Helpers.get_string_from_dict_or_array(options))
+#	print_debug('/webhooks/{application.id}/{interaction.token}/messages/{message.id}'.format({"application.id" = application_id, "interaction.token" = token, "message.id" = message_id}), " | ", DiscordHelpers.get_string_from_dict_or_array(options))
 	return msg
 
 
@@ -264,12 +264,12 @@ func _send_request(
 
 
 func _init(interaction: Dictionary):
-#	print_debug(Helpers.get_string_from_dict_or_array(interaction))
-	assert(Helpers.is_valid_str(interaction.id), 'Interaction must have an id')
-	assert(Helpers.is_valid_str(interaction.application_id), 'Interaction must have an application id')
-	assert(Helpers.is_valid_str(interaction.token), 'Interaction must have a token')
+#	print_debug(DiscordHelpers.get_string_from_dict_or_array(interaction))
+	assert(DiscordHelpers.is_valid_str(interaction.id), 'Interaction must have an id')
+	assert(DiscordHelpers.is_valid_str(interaction.application_id), 'Interaction must have an application id')
+	assert(DiscordHelpers.is_valid_str(interaction.token), 'Interaction must have a token')
 	assert(interaction.has('type'), 'Interaction must have a type')
-	assert(Helpers.is_num(interaction.version), 'Interaction must have a version')
+	assert(DiscordHelpers.is_num(interaction.version), 'Interaction must have a version')
 
 	id = interaction.id
 #	application_id = interaction.application_id

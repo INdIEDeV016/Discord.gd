@@ -1,7 +1,7 @@
-class_name Helpers
+class_name DiscordHelpers
 
-## General purpose Helpers functions
-## used by discord.gd plugin
+## General purpose helper functions
+## used by discord.gd plugin.
 
 var Months: = {
 	1 : "January",
@@ -165,7 +165,7 @@ static func get_pretty_datetime(
 		time = "{day} at {hour}:{minute} {am/pm}"
 	}
 ) -> Array[String]:
-	var helpers: = Helpers.new()
+	var helpers: = DiscordHelpers.new()
 	var datetime: = Time.get_datetime_dict_from_unix_time(iso2unix(iso_timestamp))
 	var system_date: = Time.get_date_dict_from_system()
 	var array: Array[String] = []

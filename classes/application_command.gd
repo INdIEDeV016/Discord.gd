@@ -124,8 +124,8 @@ func add_options(array_option_data: Array[Dictionary]) -> ApplicationCommand:
 	for option_data in array_option_data:
 		# Generic method to add an option to the command
 		assert(option_data.has('type'), 'ApplicationCommand option must have a type')
-		assert(option_data.has('name') and Helpers.is_valid_str(option_data.name), 'ApplicationCommand option must have a name')
-		assert(option_data.has('description') and Helpers.is_valid_str(option_data.description), 'ApplicationCommand option must have a description')
+		assert(option_data.has('name') and DiscordHelpers.is_valid_str(option_data.name), 'ApplicationCommand option must have a name')
+		assert(option_data.has('description') and DiscordHelpers.is_valid_str(option_data.description), 'ApplicationCommand option must have a description')
 		options.append(option_data)
 	return self
 

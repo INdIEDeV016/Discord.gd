@@ -94,7 +94,7 @@ func resolve(bit):
 			ret = ret | resolve(b)
 		return ret
 
-	if (Helpers.is_valid_str(bit)):
+	if (DiscordHelpers.is_valid_str(bit)):
 		if (FLAGS.has(bit)):
 			return FLAGS[bit]
 

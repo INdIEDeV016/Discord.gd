@@ -3,7 +3,7 @@ extends Node
 
 ##Main script for discord.gd plugin
 ##
-##Copyright 2021, Delano Lourenco
+##Copyright 2021, Krishnendu Mondal
 ##For Copyright and License: See LICENSE.md
 
 # Signals
@@ -87,8 +87,10 @@ var guilds_loaded = 0
 
 
 # Public Functions
-func login() -> void:
-	assert(TOKEN.length() > 10, 'ERROR: Unable to login. TOKEN attribute not set.')
+func login(token: String = TOKEN, intents: int = INTENTS) -> void:
+	TOKEN = token
+	INTENTS = intents
+	assert(not TOKEN.is_empty() and TOKEN.length() > 10, 'ERROR: Unable to login. TOKEN attribute not set.')
 	_headers = [
 		'Authorization: Bot %s' % TOKEN,
 		'User-Agent: discord.gd (https://github.com/3ddelano/discord.gd)'
@@ -141,7 +143,7 @@ func start_thread(message: Channel.Message, thread_name: String, duration: int =
 
 
 func get_guild_icon(guild_id: String, size: int = 256) -> PackedByteArray:
-	assert(Helpers.is_valid_str(guild_id), 'Invalid Type: guild_id must be a valid String')
+	assert(DiscordHelpers.is_valid_str(guild_id), 'Invalid Type: guild_id must be a valid String')
 
 	var guild = guilds.get(str(guild_id))
 
@@ -212,7 +214,7 @@ func set_presence(p_options: Dictionary) -> void:
 	assert(p_options, 'Missing options for set_presence')
 	assert(typeof(p_options) == TYPE_DICTIONARY, 'Invalid Type: options in set_presence must be a Dictionary')
 
-	if p_options.has('status') and Helpers.is_valid_str(p_options.status):
+	if p_options.has('status') and DiscordHelpers.is_valid_str(p_options.status):
 		assert(str(p_options.status).to_upper() in PRESENCE_STATUS_TYPES, 'Invalid Type: status must be one of PRESENCE_STATUS_TYPES')
 		new_presence.status = p_options.status.to_lower()
 	if p_options.has('afk') and p_options.afk is bool:
@@ -220,18 +222,18 @@ func set_presence(p_options: Dictionary) -> void:
 
 	# Check if an activity was passed
 	if p_options.has('activity') and typeof(p_options.activity) == TYPE_DICTIONARY:
-		if p_options.activity.has('name') and Helpers.is_valid_str(p_options.activity.name):
+		if p_options.activity.has('name') and DiscordHelpers.is_valid_str(p_options.activity.name):
 			new_presence.activity.name = p_options.activity.name
 
-		if p_options.activity.has('url') and Helpers.is_valid_str(p_options.activity.url):
+		if p_options.activity.has('url') and DiscordHelpers.is_valid_str(p_options.activity.url):
 			new_presence.activity.url = p_options.activity.url
 
-		if p_options.activity.has('created_at') and Helpers.is_num(p_options.activity.created_at):
+		if p_options.activity.has('created_at') and DiscordHelpers.is_num(p_options.activity.created_at):
 			new_presence.activity.created_at = p_options.activity.created_at
 		else:
 			new_presence.activity.created_at = Time.get_unix_time_from_system() * 1000
 
-		if p_options.activity.has('type') and Helpers.is_valid_str(p_options.activity.type):
+		if p_options.activity.has('type') and DiscordHelpers.is_valid_str(p_options.activity.type):
 			assert(str(p_options.activity.type).to_upper() in ACTIVITY_TYPES, 'Invalid Type: type must be one of ACTIVITY_TYPES')
 			new_presence.activity.type = ACTIVITY_TYPES[str(p_options.activity.type).to_upper()]
 
@@ -240,7 +242,7 @@ func set_presence(p_options: Dictionary) -> void:
 
 # ONLY custom emojis will work, pass in only the Id of the emoji to the custom_emoji
 func create_reaction(messageordict, custom_emoji: String) -> int:
-	assert(Helpers.is_valid_str(custom_emoji), 'Invalid Type: custom_emoji must be a String')
+	assert(DiscordHelpers.is_valid_str(custom_emoji), 'Invalid Type: custom_emoji must be a String')
 	custom_emoji = 'a:' + custom_emoji
 	assert(messageordict is Channel.Message or typeof(messageordict) == TYPE_DICTIONARY, 'Invalid type: Expected a Channel.Message or Dictionary')
 
@@ -252,7 +254,7 @@ func create_reaction(messageordict, custom_emoji: String) -> int:
 
 
 func delete_reaction(messageordict, custom_emoji: String, userid: String = '@me') -> int:
-	assert(Helpers.is_valid_str(custom_emoji), 'Invalid Type: custom_emoji must be a String')
+	assert(DiscordHelpers.is_valid_str(custom_emoji), 'Invalid Type: custom_emoji must be a String')
 	custom_emoji = 'a:' + custom_emoji
 	assert(messageordict is Channel.Message or typeof(messageordict) == TYPE_DICTIONARY, 'Invalid type: Expected a Channel.Message or Dictionary')
 
@@ -280,7 +282,7 @@ func delete_reactions(messageordict, custom_emoji = '') -> int:
 
 
 func get_reactions(messageordict, custom_emoji: String):
-	assert(Helpers.is_valid_str(custom_emoji), 'Invalid Type: custom_emoji must be a String')
+	assert(DiscordHelpers.is_valid_str(custom_emoji), 'Invalid Type: custom_emoji must be a String')
 	custom_emoji = 'a:' + custom_emoji
 	assert(messageordict is Channel.Message or typeof(messageordict) == TYPE_DICTIONARY, 'Invalid type: Expected a Channel.Message or Dictionary')
 	if typeof(messageordict) == TYPE_DICTIONARY and messageordict.has('message_id'):
@@ -336,7 +338,7 @@ func delete_command(command: ApplicationCommand, id: Snowflake = null) -> int:
 func delete_commands(guild_id: String = '') -> int:
 	var slug = '/applications/%s' % application.id
 
-	if Helpers.is_valid_str(guild_id):
+	if DiscordHelpers.is_valid_str(guild_id):
 		# Deleting guild commands
 		slug += '/guilds/%s' % guild_id
 
@@ -494,7 +496,7 @@ func _data_received(packet: PackedByteArray) -> void:
 			# Heartbeat Acknowledged
 			_heartbeat_ack_received = true
 			if VERBOSE:
-				print('Heartbeat ack')
+				print('Heartbeat acknowledged!')
 		'9':
 			# Opcode 9 Invalid Session
 			_invalid_session_is_resumable = d
@@ -515,7 +517,7 @@ func _process(_delta) -> void:
 		var state: = _client.get_ready_state()
 		match state:
 			WebSocketPeer.STATE_CONNECTING:
-				prints("Connecting to the Websocket server at: ", _gateway_base)
+				prints("Connecting to the Websocket server at:", _gateway_base)
 			WebSocketPeer.STATE_OPEN:
 				while _client.get_available_packet_count():
 					_data_received(_client.get_packet())
@@ -559,8 +561,8 @@ func _handle_events(dict: Dictionary) -> void:
 			bot_ready.emit()
 
 		'GUILD_CREATE':
-			var guild = dict.d
-			guild_create.emit(guild)
+			var guild: Dictionary = dict.d
+			guild_create.emit(Guild.new(guild))
 #			_clean_guilds([guild])
 #			# Update number of cached guilds
 #			if guild.has('lazy') and guild.lazy:
@@ -584,7 +586,7 @@ func _handle_events(dict: Dictionary) -> void:
 		'GUILD_DELETE':
 			var guild = dict.d
 			guilds.erase(guild.id)
-			guild_delete.emit(guild.id)
+			guild_delete.emit(Guild.new(guild))
 
 		'GUILD_MEMBER_ADD':
 			guild_member_add.emit(Snowflake.new(dict.d.guild_id), Guild.Guild_Member_Object.new(dict.d))
@@ -872,7 +874,7 @@ func _send_request(slug: String, payload, method = HTTPClient.METHOD_POST):
 
 
 func _get_dm_channel(channel_id: String) -> Dictionary:
-	assert(Helpers.is_valid_str(channel_id), 'Invalid Type: channel_id must be a valid String')
+	assert(DiscordHelpers.is_valid_str(channel_id), 'Invalid Type: channel_id must be a valid String')
 	var data = await _send_get('/channels/%s' % channel_id)
 	return data
 
@@ -918,7 +920,7 @@ func _send_get_cdn(slug: String) -> PackedByteArray:
 
 	if data[1] != 200:
 		print_rich('[color=red]HTTPS GET cdn Error:[/color] [color=yellow]Status Code: %s[/color]' % data[1])
-		print_rich(Helpers.get_string_from_dict_or_array(data[3]))
+		print_rich(DiscordHelpers.get_string_from_dict_or_array(data[3]))
 
 	return data[3]
 
@@ -979,7 +981,7 @@ func _send_message_request(
 
 	if typeof(options) == TYPE_DICTIONARY:
 
-		if options.has('content') and Helpers.is_str(options.content):
+		if options.has('content') and DiscordHelpers.is_str(options.content):
 			assert(options.content.length() <= 2048, 'Channel.Message content must be less than 2048 characters')
 			payload.content = options.content
 
@@ -1033,8 +1035,8 @@ func _send_message_request(
 			if options.files.size() > 0:
 				# Loop through each file
 				for file in options.files:
-					assert(file.has('name') and Helpers.is_valid_str(file.name), 'Missing name for file in files')
-					assert(file.has('media_type') and Helpers.is_valid_str(file.media_type), 'Missing media_type for file in files')
+					assert(file.has('name') and DiscordHelpers.is_valid_str(file.name), 'Missing name for file in files')
+					assert(file.has('media_type') and DiscordHelpers.is_valid_str(file.media_type), 'Missing media_type for file in files')
 					assert(file.has('data') and file.data, 'Missing data for file in files')
 					assert(file.data is PackedByteArray, 'Invalid Type: data of file in files must be PackedByteArray')
 
@@ -1065,7 +1067,7 @@ func _send_message_request(
 		return msg
 
 # func request_guild_members(guild_id):
-# 	assert(Helpers.is_valid_str(guild_id), 'Invalid Type: guild_id must be a String')
+# 	assert(DiscordHelpers.is_valid_str(guild_id), 'Invalid Type: guild_id must be a String')
 
 # 	if not guilds.has(guild_id):
 # 		push_error('Guild not found with that guild_id')

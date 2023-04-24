@@ -215,30 +215,30 @@ class Message extends DiscordDataclass:
 		class Embed_Thumbnail_Object extends DiscordDataclass:
 			var url: String:
 				set(new):
-					if Helpers.is_valid_url(new): url = new
+					if DiscordHelpers.is_valid_url(new): url = new
 			var proxy_url: String:
 				set(new):
-					if Helpers.is_valid_url(new): proxy_url = new
+					if DiscordHelpers.is_valid_url(new): proxy_url = new
 			var height: int
 			var width: int
 
 		class Embed_Video_Object extends DiscordDataclass:
 			var url: String:
 				set(new):
-					if Helpers.is_valid_url(new): url = new
+					if DiscordHelpers.is_valid_url(new): url = new
 			var proxy_url: String:
 				set(new):
-					if Helpers.is_valid_url(new): proxy_url = new
+					if DiscordHelpers.is_valid_url(new): proxy_url = new
 			var height: int
 			var width: int
 
 		class Embed_Image_Object extends DiscordDataclass:
 			var url: String:
 				set(new):
-					if Helpers.is_valid_url(new): url = new
+					if DiscordHelpers.is_valid_url(new): url = new
 			var proxy_url: String:
 				set(new):
-					if Helpers.is_valid_url(new): proxy_url = new
+					if DiscordHelpers.is_valid_url(new): proxy_url = new
 			var height: int
 			var width: int
 
@@ -246,19 +246,19 @@ class Message extends DiscordDataclass:
 			var name: String
 			var url:
 				set(new):
-					if Helpers.is_valid_url(new): url = new
+					if DiscordHelpers.is_valid_url(new): url = new
 
 		class Embed_Author_Object extends DiscordDataclass:
 			var name: String
 			var url: String:
 				set(new):
-					if Helpers.is_valid_url(new): url = new
+					if DiscordHelpers.is_valid_url(new): url = new
 			var icon_url: String:
 				set(new):
-					if Helpers.is_valid_url(new): icon_url = new
+					if DiscordHelpers.is_valid_url(new): icon_url = new
 			var proxy_url: String:
 				set(new):
-					if Helpers.is_valid_url(new): proxy_url = new
+					if DiscordHelpers.is_valid_url(new): proxy_url = new
 
 		class Embed_Field_Object extends DiscordDataclass:
 			var name: String
@@ -269,10 +269,10 @@ class Message extends DiscordDataclass:
 			var text: String
 			var url: String:
 				set(new):
-					if Helpers.is_valid_url(new): url = new
+					if DiscordHelpers.is_valid_url(new): url = new
 			var proxy_icon_url: String:
 				set(new):
-					if Helpers.is_valid_url(new): proxy_icon_url = new
+					if DiscordHelpers.is_valid_url(new): proxy_icon_url = new
 
 
 	func _init(properties: Dictionary):
@@ -348,10 +348,10 @@ class Attachment_Object extends DiscordDataclass:
 	var size: int
 	var url: String:
 		set(new):
-			if Helpers.is_valid_url(new): url = new
+			if DiscordHelpers.is_valid_url(new): url = new
 	var proxy_url: String:
 		set(new):
-			if Helpers.is_valid_url(new): proxy_url = new
+			if DiscordHelpers.is_valid_url(new): proxy_url = new
 	var height: int
 	var width: int
 	var ephemeral: bool
@@ -429,7 +429,7 @@ func get_channel_message(message_id: Snowflake = last_message_id) -> Channel.Mes
 	var message: Dictionary = {}
 	if message_id.id != null:
 		message = await DiscordBot._send_get("/channels/{channel.id}/messages/{message.id}".format({"channel.id" = id.id, "message.id" = message_id.id}))
-	#	Helpers.print_dict(message)
+	#	DiscordHelpers.print_dict(message)
 	return Channel.Message.new(message)
 
 ##Post a message to a guild text or DM channel. Returns a message object. Fires a Message Create Gateway event. See message formatting for more information on how to properly format messages.

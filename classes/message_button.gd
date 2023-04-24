@@ -95,10 +95,10 @@ func _to_dict() -> Dictionary:
 
 	if _style == STYLES.LINK:
 		# Must have a url
-		assert(Helpers.is_valid_str(url), 'A LINK MessageButton must have a url.')
+		assert(DiscordHelpers.is_valid_str(url), 'A LINK MessageButton must have a url.')
 		return {'type': type, 'style': _style, 'label': label, 'url': url, 'disabled': disabled}
 	else:
-		assert(Helpers.is_valid_str(custom_id), 'A button must have a custom_id.')
+		assert(DiscordHelpers.is_valid_str(custom_id), 'A button must have a custom_id.')
 		return {
 			'type': type,
 			'style': _style,
